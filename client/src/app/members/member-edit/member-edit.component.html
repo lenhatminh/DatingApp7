@@ -14,7 +14,7 @@
     <div class="card">
       <img
         src="{{ member.photoUrl || './assets/user.png' }}"
-        alt="{{ member.knowAs }}"
+        alt="{{ member.knownAs }}"
         class="card-img-top img-thumbnail"
       />
       <div class="card-body">
@@ -28,11 +28,11 @@
         </div>
         <div>
           <strong>Last Active:</strong>
-          <p>{{ member.lastActive }}</p>
+          <p>{{ member.lastActive + "Z" | timeago }}</p>
         </div>
         <div>
           <strong>Member Since:</strong>
-          <p>{{ member.created }}</p>
+          <p>{{ member.created | date : "dd MMM yyyy" }}</p>
         </div>
       </div>
       <div class="card-footer">
@@ -49,7 +49,7 @@
   </div>
   <div class="col-8">
     <tabset class="member-tabset"
-      ><tab heading="About {{ member.knowAs }}"
+      ><tab heading="About {{ member.knownAs }}"
         ><form #editForm="ngForm" id="editForm" (ngSubmit)="updateMember()">
           <h4 class="mt-2">Description</h4>
           <textarea
