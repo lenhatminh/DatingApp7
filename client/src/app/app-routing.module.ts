@@ -12,6 +12,7 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { preserveWhitespacesDefault } from '@angular/compiler';
 import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
+import { MemberDetailedResolver } from './_resolver/member-detailed.resolver';
 
 const routes: Routes = [
   {
@@ -35,6 +36,7 @@ const routes: Routes = [
       {
         path: 'members/:username',
         component: MemberDetailComponent,
+        resolve: { member: MemberDetailedResolver },
       },
       {
         path: 'lists',
