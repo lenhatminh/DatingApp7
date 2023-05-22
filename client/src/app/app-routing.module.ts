@@ -13,6 +13,8 @@ import { MemberEditComponent } from './members/member-edit/member-edit.component
 import { preserveWhitespacesDefault } from '@angular/compiler';
 import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
 import { MemberDetailedResolver } from './_resolver/member-detailed.resolver';
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
+import { AdminGuard } from './_guard/admin.guard';
 
 const routes: Routes = [
   {
@@ -45,6 +47,11 @@ const routes: Routes = [
       {
         path: 'messages',
         component: MessagesComponent,
+      },
+      {
+        path: 'admin',
+        component: AdminPanelComponent,
+        canActivate: [AdminGuard],
       },
     ],
   },
