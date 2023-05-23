@@ -1,17 +1,27 @@
 <div class="card">
-  <div class="card-body">
-    <div *ngIf="messages.length === 0">
+  <div
+    class="card-body"
+    #scrollMe
+    style="overflow: scroll; height: 535px"
+    [scrollTop]="scrollMe.scrollHeight"
+  >
+    <div *ngIf="(messageService.messageThread$ | async)?.length === 0">
       No messages yet... say hi by using the message box below
     </div>
-    <ul *ngIf="messages.length > 0" class="chat">
-      <li *ngFor="let message of messages">
+
+    <ul
+      *ngIf="(messageService.messageThread$ | async)!.length > 0"
+      class="chat"
+    >
+      <li *ngFor="let message of messageService.messageThread$ | async">
         <div>
-          <span class="chat-img float-end"
-            ><img
+          <span class="chat-img float-end">
+            <img
               class="rounded-circle"
               src="{{ message.senderPhotoUrl || './assets/user.png' }}"
               alt="image of user"
-          /></span>
+            />
+          </span>
           <div class="chat-body">
             <div class="header">
               <small class="text-muted">
@@ -24,12 +34,13 @@
                     !message.dateRead && message.senderUsername !== username
                   "
                   >(unread)</span
-                ><span
+                >
+                <span
                   class="text-success"
                   *ngIf="
                     message.dateRead && message.senderUsername !== username
                   "
-                  >(Read {{ message.dateRead | timeago }})</span
+                  >(read {{ message.dateRead | timeago }})</span
                 >
               </small>
             </div>
@@ -39,6 +50,7 @@
       </li>
     </ul>
   </div>
+
   <div class="card-footer">
     <form #messageForm="ngForm" (ngSubmit)="sendMessage()" autocomplete="off">
       <div class="input-group">
@@ -52,11 +64,11 @@
         />
         <div class="input-group-append">
           <button
-            [disabled]="!messageForm.valid"
+            [disabled]="!messageForm.valid || loading"
             class="btn btn-primary"
             type="submit"
           >
-            Send
+            Send <i *ngIf="loading" class="fa fa-spinner fa-spin"></i>
           </button>
         </div>
       </div>

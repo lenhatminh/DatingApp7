@@ -2,6 +2,7 @@ using API.Data;
 using API.Helpers;
 using API.Interfaces;
 using API.Services;
+using API.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Extensions
@@ -18,6 +19,8 @@ namespace API.Extensions
             services.AddScoped<IPhotoService,PhotoService>();
             services.AddScoped<ILikesRepository,LikesRepository>();
             services.AddScoped<IMessageRepository,MessageRepository>();
+            services.AddSignalR();
+            services.AddSingleton<PresenceTracker>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
             services.AddScoped<LogUserActivity>();
